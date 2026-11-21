@@ -11,9 +11,10 @@ randomness. Running it twice produces identical bytes.
 
 The lesson from our 18 November entry (rank 1,848 of 18,017, no prize):
 breadth wins. That image carried 9 stories; the winners carried 42-52.
-This page carries 51 verified stories across 8 sections, with the day
+This page carries 67 verified stories across 8 sections, with the day
 named prominently and a specific fact (name, number or place) in every item.
-Sources: AP, Reuters, BBC, The New York Times, One Turn, Horizon, NPR.
+Sources: AP, Reuters, BBC, The New York Times, One Turn, Horizon, NPR,
+Investors.com, Equiti, IANS, Sportradar, Jabulani Radio, Artesh.
 """
 
 import os
@@ -69,6 +70,7 @@ SECTIONS = [
         ("Iran downs a US MQ-9 drone", "over Hormuz, its 58th"),
         ("Trump weighs new Iran strikes", "as Israel presses for fast action"),
         ("Salvadoran troops in Haiti", "lose soldiers to roadside explosives"),
+        ("Kryvyi Rih strike wounds 20", "hours after the Kyiv barrage"),
         ("Lewis Pugh swims Hormuz", "to flag the war's toll on wildlife"),
     ]),
     ("DIPLOMACY & POLITICS", (24, 48, 110), [
@@ -81,6 +83,9 @@ SECTIONS = [
         ("Spain heads to 29 Nov vote", "as conservatives gain ground"),
         ("Gen Z protests spread", "across 25 European countries"),
         ("Bangladesh violence flares", "ahead of Hasina's planned return"),
+        ("North Korea expands Yongbyon", "enrichment grows, IAEA says"),
+        ("ANC fights to hold S. Africa cities", "after election setback"),
+        ("Nepal PM faces India test", "Balendra Shah's first visit"),
     ]),
     ("CLIMATE & DISASTER", (14, 92, 86), [
         ("COP31 runs past deadline", "deadlocked over fossil fuels"),
@@ -93,6 +98,9 @@ SECTIONS = [
     ("WORLD", (88, 88, 88), [
         ("French police sentenced", "for beating producer Michel Zecler"),
         ("Man convicted of starting", "the deadly Palisades fire in LA"),
+        ("Yemen city besieged by Houthis", "a father: 'it's just fireworks'"),
+        ("Europeans push to replace", "UN peacekeepers in Lebanon"),
+        ("US consumer sentiment rises", "to 51.5 in Nov, up from 48"),
     ]),
     ("MARKETS & ECONOMY", (24, 102, 44), [
         ("Anthropic lists at ~$2tn", "in the biggest IPO ever, $81.3bn"),
@@ -101,6 +109,12 @@ SECTIONS = [
         ("Bayer pays $7.25bn", "to settle Roundup complaints"),
         ("$22.5m train heist", "called 'staggering' by police"),
         ("DAX −2.6%; FTSE −1.0%", "CAC −1.9% as Europe slides"),
+        ("Nvidia craters 14% in a day", "down 23% in a week; $2.7tn lost"),
+        ("VIX fear gauge soars 33%", "to 37, a 52-week high"),
+        ("Bitcoin slips below $58,200", "down 4.5%; crypto plays fall 14%+"),
+        ("UK retail sales beat forecasts", "+2.3% in Oct vs 1.7% expected"),
+        ("Canada retail sales hit 7.5%", "strongest since July 2022"),
+        ("Asia rout: Kospi −5.5%", "Taiex −6.2%; MSCI Asia at 6-yr low"),
     ]),
     ("SCIENCE & HEALTH", (96, 44, 128), [
         ("Cancer pill clears tumours", "in 1 in 12 pancreatic patients"),
@@ -110,6 +124,7 @@ SECTIONS = [
         ("CERN finds rare decay", "3.2σ evidence, 1 in 10bn"),
         ("Europa's sodium cloud", "mapped by Keck Observatory"),
         ("MIT builds AI that respects", "physics of chaos"),
+        ("AlphaFold3 frees 200m structures", "DeepMind opens protein data"),
     ]),
     ("TECH & CYBER", (176, 92, 12), [
         ("FBI database 'hacked'", "USDA hit too; outages continue"),
@@ -124,6 +139,8 @@ SECTIONS = [
         ("Pakistan beat Sri Lanka", "by 8 wickets to clinch Test series"),
         ("UAE Bulls win Abu Dhabi T10", "India A crush Nepal by 306 runs"),
         ("Nuggets 133–124 Rockets", "Lakers edge Kings 106–104"),
+        ("Russell takes Las Vegas GP pole", "0.098s clear of Sainz"),
+        ("Alcaraz sweeps ATP Finals group", "6-4 6-1 over Cobolli in Turin"),
     ]),
 ]
 
@@ -131,10 +148,10 @@ LEFT_SECTIONS = SECTIONS[0:4]    # WAR, DIPLOMACY, CLIMATE, WORLD (25 items)
 RIGHT_SECTIONS = SECTIONS[4:8]   # MARKETS, SCIENCE, TECH, SPORT (23 items)
 
 NUMBERS_STRIP = ("THE DAY IN NUMBERS — 400+ drones · 110 missiles · −3.7% S&P 500 · "
-                 "$81.3bn IPO · 109–0 · 1 in 12 · 24 light-hours · 6.9 quake · "
-                 "78 ransomware claims")
+                 "$81.3bn IPO · 109–0 · 1 in 12 · 6.9 quake · Nvidia −14% · "
+                 "VIX 37 · BTC $58,200")
 SOURCES_LINE = ("Sources: AP · Reuters · BBC · The New York Times · One Turn · "
-                "Horizon · NPR — 51 stories, Saturday 21 November 2026")
+                "Horizon · NPR · Investors.com · IANS — 67 stories, Saturday 21 November 2026")
 
 
 def story_count():
@@ -242,7 +259,7 @@ def render(item_size=14, out_path=None):
     d.line([(MARGIN, y), (W - MARGIN, y)], fill=RED, width=3)
     y += 8
     meta_f = font(SANS, 12)
-    left_meta = "51 STORIES · 8 SECTIONS · 7 REGIONS"
+    left_meta = "67 STORIES · 8 SECTIONS · 7 REGIONS"
     right_meta = "ONE DAY, THE WHOLE WORLD"
     d.text((MARGIN, y), left_meta, font=meta_f, fill=SOFT_INK)
     rw = text_w(d, right_meta, meta_f)
@@ -287,9 +304,9 @@ def render(item_size=14, out_path=None):
     for size in (14, 13, 12):
         item_f = font(SANS, size)
         item_fb = font(SANS_B, size)
-        line_h = size + 5
-        gap = 3
-        head_h = 22
+        line_h = size + 4
+        gap = 2
+        head_h = 20
         lh = measure_column(d, LEFT_SECTIONS, item_f, item_fb, line_h, gap,
                             head_h)
         rh = measure_column(d, RIGHT_SECTIONS, item_f, item_fb, line_h, gap,
