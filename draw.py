@@ -409,7 +409,7 @@ def main():
 
     # --- meta line + date-checked line
     f_meta = f(SANS_B, 13)
-    meta = (f"{n} STORIES  ·  7 SECTIONS  ·  7 REGIONS  ·  "
+    meta = (f"{n} STORIES  ·  7 SECTIONS  ·  8 REGIONS  ·  "
             "ONE DAY, THE WHOLE WORLD")
     mw = d.textlength(meta, font=f_meta)
     d.text(((W - mw) / 2, 102), meta, font=f_meta, fill=INK)
