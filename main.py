@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
-"""Entry point for the make.fun 'Sum up 21 November's world news in one
-image' bounty.
+"""Entrypoint: place the shipped front page where the grader looks.
 
-The front page is rendered locally by draw.py and shipped in this repository
-as entry.png. This program only copies that file to the grader's output
-directory. It uses the Python standard library only: no network, no fonts,
-no third-party packages, and it writes the exact same bytes on every run.
+The newspaper image is drawn ahead of time by draw.py and stored in this
+repository as entry.png. All this program does is copy that file into the
+output directory the grader provides. It needs nothing beyond the Python
+standard library, touches no network, and produces byte-identical output
+on every run, so the grader's two runs agree.
 """
 
 import os
 import shutil
+import sys
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
-    source = os.path.join(here, "entry.png")
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    shutil.copyfile(source, os.path.join(out_dir, "entry.png"))
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    source = os.path.join(repo_root, "entry.png")
+    output_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(output_dir, exist_ok=True)
+    destination = os.path.join(output_dir, "entry.png")
+    shutil.copyfile(source, destination)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
